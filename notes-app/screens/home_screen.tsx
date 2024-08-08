@@ -41,7 +41,7 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.search}>
+      {/* <View style={styles.search}>
         <PrimaryTextInput
           placeholder='Notas..'
           onChangeText={() => {}}
@@ -49,7 +49,7 @@ const HomeScreen = () => {
         <TouchableOpacity style={styles.button}>
           <AntDesign name="search1" size={24} color={colors.white} style={{ justifyContent: 'center', alignContent: 'center' }} />
         </TouchableOpacity>
-      </View>
+      </View> */}
       <AddNoteModal
         visible={modalVisible}
         setVisible={setModalVisible}
@@ -61,6 +61,7 @@ const HomeScreen = () => {
         <FlatList
           data={noteList}
           renderItem={({ item }) => <Note key={item.id} title={item.title} content={item.content} remove={() => removeNote(item.id)} />}
+          style={{ marginTop: 25 }}
         />
       </ScrollView>
       <FloatingActionButton onPress={() => setModalVisible(!modalVisible)} />
