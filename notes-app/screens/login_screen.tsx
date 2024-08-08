@@ -5,17 +5,31 @@ import {
 import colors from '../constants';
 import PrimaryButton from '../components/primary_button';
 import PrimaryTextInput from '../components/primary_textinput';
+import { useState } from 'react';
 
 export type Props = {
   navigation: any
 }
 
+const users = [
+  {
+    email: 'bruno@gmail.com',
+    password: '12345',
+  },
+];
+
 const LoginScreen: React.FC<Props> = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const login = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'HomeScreen' }],
-    });
+    const foundUser = users.find((user) => email === user.email && password === user.password);
+    if (foundUser) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'HomeScreen' }],
+      });
+    }
   }
 
   return (
@@ -26,13 +40,15 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
       <PrimaryTextInput
         placeholder={'Email'}
+        onChangeText={setEmail}
       />
       <PrimaryTextInput
         placeholder={'Senha'}
         secure={true}
+        onChangeText={setPassword}
       />
 
-      <PrimaryButton text='Entrar' onPress={login}/>
+      <PrimaryButton text='Entrar' onPress={login} />
     </View>
   );
 }

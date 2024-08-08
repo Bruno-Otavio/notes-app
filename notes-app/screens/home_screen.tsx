@@ -1,4 +1,5 @@
 import {
+  FlatList,
   ScrollView,
   StyleSheet,
   TouchableOpacity, View,
@@ -12,64 +13,57 @@ import AddNoteModal from '../components/add_note_modal';
 import Note from '../components/note_component';
 
 const HomeScreen = () => {
+  interface INota {
+    id: number,
+    title: string,
+    content: string,
+  }
+
   const [modalVisible, setModalVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [noteList, setNoteList] = useState<INota[]>([]);
 
-  let notesIds = 3;
-  
-  const notes = [
-    <Note 
-      title='Nota1'
-      content='Loro Jose'
-      key={1}
-    />,
-    <Note 
-      title='Me Ajude'
-      content='React Native?'
-      key={2}
-    />,
-    <Note 
-      title='Ahhhhhhhhhh'
-      content='Circleeeeeeeeeee'
-      key={3}
-    />,
-  ];
+  const handleNote = () => {
+    const nota = {
+      id: Date.now(),
+      title: title,
+      content: content,
+    }
+    setNoteList([...noteList, nota]);
+    setModalVisible(!modalVisible);
+  }
+
+  const removeNote = (id: number) => {
+    const updatedNoteList = noteList.filter((note) => note.id !== id);
+    setNoteList(updatedNoteList);
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.search}>
         <PrimaryTextInput
           placeholder='Notas..'
+          onChangeText={() => {}}
         />
         <TouchableOpacity style={styles.button}>
           <AntDesign name="search1" size={24} color={colors.white} style={{ justifyContent: 'center', alignContent: 'center' }} />
         </TouchableOpacity>
       </View>
-      <AddNoteModal 
-        visible={modalVisible} 
+      <AddNoteModal
+        visible={modalVisible}
         setVisible={setModalVisible}
         setTitle={setTitle}
         setContent={setContent}
-        onAdd={() => {
-          const nota = {
-            title: title,
-            content: content,
-          };
-          notesIds++;
-          notes.push(
-            <Note
-              title={nota.title}
-              content={nota.content}
-              key={4}
-            />
-          );
-        }}
+        onAdd={handleNote}
       />
-      <FloatingActionButton onPress={() => setModalVisible(true)} />
       <ScrollView>
-        {notes}
+        <FlatList
+          data={noteList}
+          renderItem={({ item }) => <Note key={item.id} title={item.title} content={item.content} remove={() => removeNote(item.id)} />}
+        />
       </ScrollView>
+      <FloatingActionButton onPress={() => setModalVisible(!modalVisible)} />
     </View>
   );
 }
@@ -87,6 +81,7 @@ const styles = StyleSheet.create({
     gap: 10,
     justifyContent: 'center',
     alignContent: 'center',
+    marginTop: 25,
   },
   button: {
     backgroundColor: colors.coral,

@@ -22,17 +22,17 @@ const AddNoteModal: React.FC<Props> = ({ visible, setVisible, setTitle, setConte
           <TextInput
             style={styles.input}
             placeholder="Titulo da Nota..."
-            onChange={setTitle}
+            onChangeText={(text) => setTitle(text)}
           />
           <TextInput
             style={styles.input}
             placeholder="Conteúdo da Nota..."
-            onChange={setContent}
+            onChangeText={(text) => setContent(text)}
           />
           <View style={styles.buttonsRow}>
             <Pressable
               style={styles.primaryButton}
-              onPress={onAdd}
+              onPress={() => onAdd()}
             >
               <Text style={{ ...styles.buttonText, color: colors.black }}>
                 Adicionar

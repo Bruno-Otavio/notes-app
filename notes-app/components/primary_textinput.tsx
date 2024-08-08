@@ -7,9 +7,10 @@ import colors from '../constants';
 export type Props = {
   placeholder: string,
   secure?: boolean
+  onChangeText: any
 }
 
-const PrimaryTextInput: React.FC<Props> = ({ placeholder, secure=false }) => {
+const PrimaryTextInput: React.FC<Props> = ({ placeholder, secure=false, onChangeText }) => {
   return (
     <>
       <TextInput
@@ -17,6 +18,7 @@ const PrimaryTextInput: React.FC<Props> = ({ placeholder, secure=false }) => {
         placeholder={placeholder}
         selectTextOnFocus={false}
         secureTextEntry={secure}
+        onChangeText={(text) => onChangeText(text)}
       />
     </>
   );
