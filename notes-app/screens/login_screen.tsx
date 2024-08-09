@@ -35,7 +35,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        InkWell
+        Notes App
       </Text>
 
       <PrimaryTextInput
